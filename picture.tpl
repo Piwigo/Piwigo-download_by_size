@@ -25,7 +25,7 @@ jQuery().ready(function() {
 <div id="downloadSizeBox" class="switchBox" style="display:none">
   <div class="switchBoxTitle">{'Download'|@translate} - {'Photo sizes'|@translate}</div>
   {foreach from=$current.unique_derivatives item=derivative key=derivative_type}
-  <a href="{$DLSIZE_URL}{$derivative->get_type()}" rel="nofollow">
+  <a href="{$DLSIZE_URL}{$derivative_type}" rel="nofollow">
     {$derivative->get_type()|@translate}<span class="downloadSizeDetails"> ({$derivative->get_size_hr()})</span>
   </a><br>
   {/foreach}

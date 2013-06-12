@@ -109,16 +109,6 @@ $file='';
 switch ($_GET['part'])
 {
   case 'e':
-    if ( !$user['enabled_high'] )
-    {
-      $deriv = new DerivativeImage(IMG_XXLARGE, new SrcImage($element_info));
-      if ( !$deriv->same_as_source() )
-      {
-        do_error(401, 'Access denied e');
-      }
-    }
-    $file = get_element_path($element_info);
-
     //---- specific download_by_size, start
     if (isset($_GET['size']))
     {
@@ -137,6 +127,20 @@ switch ($_GET['part'])
         unset_make_full_url();
       }
       $file = $deriv->get_path();
+    }
+    else
+    {
+    //---- specific download_by_size, end
+    if ( !$user['enabled_high'] )
+    {
+      $deriv = new DerivativeImage(IMG_XXLARGE, new SrcImage($element_info));
+      if ( !$deriv->same_as_source() )
+      {
+        do_error(401, 'Access denied e');
+      }
+    }
+    $file = get_element_path($element_info);
+    //---- specific download_by_size, start
     }
     //---- specific download_by_size, end
     
