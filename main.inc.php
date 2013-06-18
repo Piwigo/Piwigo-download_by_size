@@ -19,6 +19,13 @@ add_event_handler('loc_end_picture', 'dlsize_picture');
 function dlsize_picture()
 {
   global $conf, $template, $picture;
+
+  // in case of file with a pwg_representative, we simply fallback to the
+  // standard button (which downloads the original file)
+  if (!$picture['current']['src_image']->is_original())
+  {
+    return;
+  }
   
   $template->set_prefilter('picture', 'dlsize_picture_prefilter');
 
