@@ -127,6 +127,12 @@ switch ($_GET['part'])
         unset_make_full_url();
       }
       $file = $deriv->get_path();
+      $size = $deriv->get_size();
+
+      // change the name of the file for download, suffix with _widthxheight before the extension
+      $basename = get_filename_wo_extension($element_info['file']);
+      $extension = get_extension($element_info['file']);
+      $element_info['file'] = $basename.'_'.$size[0].'x'.$size[1].'.'.$extension;
     }
     else
     {
