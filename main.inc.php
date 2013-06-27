@@ -67,4 +67,39 @@ function dlsize_picture_prefilter($content, &$smarty)
   return $content;
 }
 
+/**
+ * getFilename function, copied from Batch Manager
+ */
+function dlsize_getFilename($row, $filesize=array())
+{
+  global $conf;
+
+  if (!isset($conf['download_by_size_file_pattern']))
+  {
+    $conf['download_by_size_file_pattern'] = '%filename%_%dimensions%';
+  }
+  
+  $row['filename'] = stripslashes(get_filename_wo_extension($row['file']));
+
+  $search = array('%id%', '%filename%', '%author%', '%dimensions%');
+  $replace = array($row['id'], $row['filename']);
+
+  if (!empty($row['author'])) $replace[] = $row['author'];
+  else $replace[] = null;
+  
+  if (!empty($filesize)) $replace[] = $filesize['width'].'x'.$filesize['height'];
+  else $replace[] = null;
+
+  $filename = str_replace($search, $replace, $conf['download_by_size_file_pattern']);
+  $filename = preg_replace(array('#_+#', '#^_#', '#_$#'), array('_', null, null), $filename);
+
+  if (empty($filename) || $filename == $conf['download_by_size_file_pattern'])
+  {
+    $filename = $row['filename'];
+  }
+  
+  $filename.= '.'.get_extension($row['path']);
+  
+  return $filename;
+}
 ?>

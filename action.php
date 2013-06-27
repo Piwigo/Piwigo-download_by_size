@@ -130,9 +130,13 @@ switch ($_GET['part'])
       $size = $deriv->get_size();
 
       // change the name of the file for download, suffix with _widthxheight before the extension
-      $basename = get_filename_wo_extension($element_info['file']);
-      $extension = get_extension($element_info['file']);
-      $element_info['file'] = $basename.'_'.$size[0].'x'.$size[1].'.'.$extension;
+      $element_info['file'] = dlsize_getFilename(
+        $element_info,
+        array(
+          'width'=>$size[0],
+          'height'=>$size[1]
+          )
+        );
     }
     else
     {
