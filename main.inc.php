@@ -81,6 +81,7 @@ function dlsize_getFilename($row, $filesize=array())
   
   $row['filename'] = stripslashes(get_filename_wo_extension($row['file']));
 
+  // datas
   $search = array('%id%', '%filename%', '%author%', '%dimensions%');
   $replace = array($row['id'], $row['filename']);
 
@@ -88,19 +89,53 @@ function dlsize_getFilename($row, $filesize=array())
   $replace[3] = empty($filesize) ? null : $filesize['width'].'x'.$filesize['height'];
 
   $filename = str_replace($search, $replace, $conf['download_by_size_file_pattern']);
+
+  // functions
+  $filename = preg_replace_callback('#\$escape\((.*?)\)#', create_function('$m', 'return str2url($m[1]);'),   $filename);
+  $filename = preg_replace_callback('#\$upper\((.*?)\)#',  create_function('$m', 'return str2upper($m[1]);'), $filename);
+  $filename = preg_replace_callback('#\$lower\((.*?)\)#',  create_function('$m', 'return str2lower($m[1]);'), $filename);
+  $filename = preg_replace_callback('#\$strpad\((.*?),(.*?),(.*?)\)#', create_function('$m', 'return str_pad($m[1],$m[2],$m[3],STR_PAD_LEFT);'), $filename);
+
+  // cleanup
   $filename = preg_replace(
     array('#_+#', '#-+#', '# +#', '#^([_\- ]+)#', '#([_\- ]+)$#'),
     array('_', '-', ' ', null, null),
     $filename
     );
-  
+
   if (empty($filename) || $filename == $conf['download_by_size_file_pattern'])
   {
     $filename = $row['filename'];
   }
-  
+
   $filename.= '.'.get_extension($row['path']);
-  
+
   return $filename;
+}
+
+if (!function_exists('str2lower'))
+{ 
+  if (function_exists('mb_strtolower') && defined('PWG_CHARSET'))
+  { 
+    function str2lower($term)
+    {
+      return mb_strtolower($term, PWG_CHARSET);
+    }
+    function str2upper($term)
+    {
+      return mb_strtoupper($term, PWG_CHARSET);
+    }
+  }
+  else
+  { 
+    function str2lower($term)
+    {
+      return strtolower($term);
+    }
+    function str2upper($term)
+    {
+      return strtoupper($term);
+    }
+  }
 }
 ?>
