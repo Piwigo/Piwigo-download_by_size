@@ -60,8 +60,8 @@ function dlsize_picture()
 
 function dlsize_picture_prefilter($content, &$smarty)
 {
-  $pattern = '<a href="{$current.U_DOWNLOAD}"';
-  $replacement = '<a id="downloadSizeLink" href="{$current.U_DOWNLOAD}"';
+  $pattern = '<a id="downloadSwitchLink"';
+  $replacement = '<a id="downloadSizeLink"';
   $content = str_replace($pattern, $replacement, $content);
 
   return $content;
