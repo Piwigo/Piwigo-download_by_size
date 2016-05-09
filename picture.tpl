@@ -30,6 +30,6 @@ jQuery().ready(function() {
   </a><br>
   {/foreach}
   {if isset($DLSIZE_ORIGINAL)}
-  <a href="{$DLSIZE_ORIGINAL}" rel="nofollow">{'Original'|@translate}</a>
+  <a href="{$DLSIZE_ORIGINAL}" rel="nofollow">{'Original'|@translate}<span class="downloadSizeDetails"> ({$DLSIZE_ORIGINAL_SIZE_HR})</span></a>
   {/if}
 </div>

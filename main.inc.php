@@ -50,7 +50,12 @@ function dlsize_picture()
     
     if (!empty($picture['current']['download_url']))
     {
-      $template->assign('DLSIZE_ORIGINAL', $picture['current']['download_url']);
+      $template->assign(
+        array(
+          'DLSIZE_ORIGINAL' => $picture['current']['download_url'],
+          'DLSIZE_ORIGINAL_SIZE_HR' => $picture['current']['width'].'x'.$picture['current']['height'],
+          )
+        );
     }
   }
 
