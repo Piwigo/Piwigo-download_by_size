@@ -26,6 +26,16 @@ function dlsize_picture()
   {
     return;
   }
+
+  // if the user has not access to the original (hd), a config parameter can also
+  // forbid to download other sizes
+  if (empty($picture['current']['download_url']))
+  {
+    if (isset($conf['download_by_size_follow_enabled_high']) and $conf['download_by_size_follow_enabled_high'])
+    {
+      return;
+    }
+  }
   
   $template->set_prefilter('picture', 'dlsize_picture_prefilter');
 

@@ -112,6 +112,14 @@ switch ($_GET['part'])
     //---- specific download_by_size, start
     if (isset($_GET['size']))
     {
+      if ( !$user['enabled_high'])
+      {
+        if (isset($conf['download_by_size_follow_enabled_high']) and $conf['download_by_size_follow_enabled_high'])
+        {
+          do_error(401, 'Access denied');
+        }
+      }
+
       if (!in_array($_GET['size'], array_keys(ImageStdParams::get_defined_type_map())))
       {
         die('Hacking attempt: unknown size');
