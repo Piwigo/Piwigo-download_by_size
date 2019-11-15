@@ -123,7 +123,14 @@ function dlsize_getFilename($row, $filesize=array())
     $filename = $row['filename'];
   }
 
-  $filename.= '.'.get_extension($row['path']);
+  if (isset($row['representative_ext']))
+  {
+    $filename.= '.'.$row['representative_ext'];
+  }
+  else
+  {
+    $filename.= '.'.get_extension($row['path']);
+  }
 
   return $filename;
 }
