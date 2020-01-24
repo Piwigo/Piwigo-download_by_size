@@ -20,9 +20,16 @@ function dlsize_picture()
 {
   global $conf, $template, $picture;
 
+  // some non picture files (with a representative) are relevant for multiple
+  // size download, so let's make exceptions
+  $permitted_non_picture = array('tif', 'tiff');
+
   // in case of file with a pwg_representative, we simply fallback to the
   // standard button (which downloads the original file)
-  if (!$picture['current']['src_image']->is_original())
+  if (
+    !$picture['current']['src_image']->is_original()
+    and !in_array(strtolower(get_extension($picture['current']['path'])), $permitted_non_picture)
+  )
   {
     return;
   }
