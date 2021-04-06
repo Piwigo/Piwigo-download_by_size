@@ -22,7 +22,7 @@ function dlsize_picture()
 
   // some non picture files (with a representative) are relevant for multiple
   // size download, so let's make exceptions
-  $permitted_non_picture = array('tif', 'tiff');
+  $permitted_non_picture = conf_get_param('download_by_size_permitted_non_picture', array('tif', 'tiff'));
 
   // in case of file with a pwg_representative, we simply fallback to the
   // standard button (which downloads the original file)
