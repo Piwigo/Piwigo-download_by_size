@@ -80,7 +80,7 @@ function dlsize_picture()
   $template->parse('dlsize_picture');
 }
 
-function dlsize_picture_prefilter($content, &$smarty)
+function dlsize_picture_prefilter($content)
 {
   $pattern = '<a id="downloadSwitchLink"';
   $replacement = '<a id="downloadSizeLink"';
