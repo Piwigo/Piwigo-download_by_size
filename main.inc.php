@@ -18,7 +18,7 @@ define('DLSIZE_PATH' , PHPWG_PLUGINS_PATH.basename(dirname(__FILE__)).'/');
 add_event_handler('loc_end_picture', 'dlsize_picture');
 function dlsize_picture()
 {
-  global $conf, $template, $picture;
+  global $conf, $template, $picture, $user;
 
   // some non picture files (with a representative) are relevant for multiple
   // size download, so let's make exceptions
@@ -42,6 +42,12 @@ function dlsize_picture()
     {
       return;
     }
+  }  
+
+  //Check if user has download permission
+  if ((!isset($user['cdl_enabled_high']) or $user['cdl_enabled_high'] == false)  and (!isset($user['enabled_high']) or $user['enabled_high'] == false))
+  {
+    return;
   }
   
   $template->set_prefilter('picture', 'dlsize_picture_prefilter');
